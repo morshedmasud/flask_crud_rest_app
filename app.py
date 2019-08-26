@@ -20,7 +20,7 @@ ma = Marshmallow(app)
 
 
 
-# Product Class/Model
+# Task Class/Model
 class Tasks(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   task = db.Column(db.String(100), unique=True)
@@ -32,7 +32,7 @@ class Tasks(db.Model):
     self.description = description
 
 
-# Product Schema
+
 class TasksSchema(ma.Schema):
   class Meta:
     fields = ('id', 'task', 'description')
@@ -57,7 +57,7 @@ def add_task():
 
   return task_schema.jsonify(new_task)
 
-# Get All Products
+# Get All Tasks
 @app.route('/app', methods=['GET'])
 def get_tasks():
   all_tasks = Tasks.query.all()
@@ -65,7 +65,7 @@ def get_tasks():
   return jsonify(result)
 
 
-# Update a Product
+# Update a Tasks
 @app.route('/app/<id>', methods=['PUT'])
 def update_task(id):
   tasks = Tasks.query.get(id)
@@ -83,7 +83,7 @@ def update_task(id):
   return task_schema.jsonify(tasks)
 
 
-# Delete Product
+# Delete Task
 @app.route('/app/<id>', methods=['DELETE'])
 def delete_task(id):
   task = Tasks.query.get(id)
@@ -95,5 +95,4 @@ def delete_task(id):
 
 if __name__ == '__main__':
     logger.debug("Starting the application")
-    # from api import *
     app.run(debug=True, use_reloader=True)
