@@ -124,6 +124,7 @@ media/*
 # staticfiels!
 staticfiles/*
 
+.idea
 
 
 
