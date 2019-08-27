@@ -26,6 +26,6 @@ python app.py
 
 
 ### Header
-Content-Type   application/json
+Content-Type:   application/json
 
-token
+token:
