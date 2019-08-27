@@ -1,3 +1,19 @@
+## Python 3.6 install
+
+ ``` bash
+$ sudo apt-get update
+$ sudo apt-get install python3.6
+
+# pip3 Install 
+$ sudo apt-get -y install python3-pip
+
+# Install Virtualenv
+$ sudo pip3 install virtualenv
+
+```
+
+
+
 ## Start using virtualenv
 
 ``` bash
