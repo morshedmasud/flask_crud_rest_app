@@ -17,6 +17,9 @@ $ sudo pip3 install virtualenv
 ## Start using virtualenv
 
 ``` bash
+# Make virtualenv
+$ virtualenv -p python3.6 venv
+
 # Activate venv
 $ source venv/bin/activate
 
