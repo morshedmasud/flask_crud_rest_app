@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
 
+from functools import wraps
+
 import logging as logger
 logger.basicConfig(level="DEBUG")
 
@@ -43,8 +45,30 @@ task_schema = TasksSchema()
 tasks_schema = TasksSchema(many=True)
 
 
+main_token = "tdkjdgdsdfsdmd457dsfdk"
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+
+        token = request.headers['token']
+        if not token:
+            return jsonify({'message': "Token is missing!"}),403
+
+        if token == main_token:
+            return f(*args, **kwargs)
+        else:
+            return jsonify({'message': "Token is invalid!"}),403
+
+    return decorated
+
+
+
+
+
 # Create a Task
 @app.route('/app', methods=['POST'])
+@token_required
 def add_task():
   task = request.json['task']
   description = request.json['description']
@@ -59,6 +83,7 @@ def add_task():
 
 # Get All Tasks
 @app.route('/app', methods=['GET'])
+@token_required
 def get_tasks():
   all_tasks = Tasks.query.all()
   result = tasks_schema.dump(all_tasks)
@@ -67,6 +92,7 @@ def get_tasks():
 
 # Update a Tasks
 @app.route('/app/<id>', methods=['PUT'])
+@token_required
 def update_task(id):
   tasks = Tasks.query.get(id)
 
@@ -85,6 +111,7 @@ def update_task(id):
 
 # Delete Task
 @app.route('/app/<id>', methods=['DELETE'])
+@token_required
 def delete_task(id):
   task = Tasks.query.get(id)
   db.session.delete(task)
